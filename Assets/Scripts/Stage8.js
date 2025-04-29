@@ -1,0 +1,219 @@
+﻿ #pragma strict
+
+var player : GameObject;
+var enemy : GameObject;
+var chat_p : GameObject;
+var chat_e : GameObject;
+var options : GameObject;
+var bg : GameObject;
+
+var progress : int = 1;
+var index_p : int = 0; // player speech index
+// var regular_speech_p : Array = ["Where is it?", "I must get out here.", "Who are you?", "What the fuck!?"];
+var regular_speech_p : Array = [
+	"I don't want any trouble, don't be like \nthat.",
+	"What is this guy's problem?"
+];
+
+var index_e : int = 0; // enemy speech index
+var regular_speech_e : Array = [
+	"(Pufferfish puff body, and stare at Roro)",
+	"Who are you? What do you want?",
+	"......",
+	"Don't be so naive, attack is the best \ndefense.",
+	"Great, just like that! Remember, attack \nis the best defense.\n(Pufferfish swing away)"
+];
+
+var wrong_speech_e : Array = [
+	"What does it mean?",
+	"Not enough!",
+	"",
+	"???"
+];
+
+// --------- options
+var index_o : int = 0; // option index
+var options1 : Array = [":/", ":(", ">:(", ":3"];
+
+// --------- answer
+var index_a : int = 0;
+var answer : Array = [">:("];
+
+var anim : Animator;
+function Start () {
+	anim = enemy.GetComponent(Animator);
+	anim.SetBool("Puffing", true);
+	
+	showPlayerStf (false);
+	showEnemyStf (false);
+	showOptions (false);
+	// first step
+	playerIcon (true);
+	showEnemyStf(true);
+	enemySpk();
+}
+
+function Update () {
+	if(Input.GetKeyDown("return")) {
+		switch (progress) {
+			case 1: enemyIcon(true); enemySpk(); break;
+			case 2: showPlayerStf (true); playerSpk(); break;
+			case 3: enemySpk(); anim.SetBool("Puffing", false); break;
+			case 4: enemySpk(); anim.SetBool("Puffing", true); break;
+			
+			case 5: setOptions(options1); showOptions(true); break;
+			case 6: chooseOption(options1); break;
+			
+			case 7: showEnemyStf (false); break;
+			case 8: playerSpk(); break;
+			
+			case 9: doorOpen(); break;
+			case 10: walkInside(); break;
+
+			default:
+				break;
+		}
+		progress++;
+	}
+	
+	if(Input.GetKeyDown("up")) {
+		if(index_o > 0)selectOption(--index_o);
+	}
+	else if(Input.GetKeyDown("down")) {
+		if(index_o < 3)selectOption(++index_o);
+	}
+}
+
+function showPlayerStf (show : boolean) {
+	playerIcon(show);
+	playerChatBox(show);
+}
+
+function showEnemyStf (show : boolean) {
+	enemyIcon(show);
+	enemyChatBox(show);
+}
+
+function playerSpk () {
+	playerSpeak(regular_speech_p[index_p++]);
+}
+
+function enemySpk () {
+	enemySpeak(regular_speech_e[index_e++]);
+}
+
+// ------- speak
+function playerSpeak (speech : String) { // speech_p[index_p++]
+	setPlayerSpeech (speech);
+	chat_p.GetComponentInChildren(AutoType).Speak();
+}
+
+function enemySpeak (speech : String) { // speech_e[index_e++]
+	setEnemySpeech (speech);
+	chat_e.GetComponentInChildren(AutoType).Speak();
+}
+
+// --------- Speech
+function setEnemySpeech (str : String) {
+	chat_e.GetComponentInChildren(GUIText).GetComponent.<GUIText>().text = str;
+}
+
+function setPlayerSpeech (str : String) {
+	chat_p.GetComponentInChildren(GUIText).GetComponent.<GUIText>().text = str;
+}
+
+// -------- Icon show/hide
+function enemyIcon (show : boolean) {
+	var val : int;
+	if(show)val = 1;
+	else val = 0;
+	
+	enemy.GetComponent(SpriteRenderer).color.a = val;
+}
+
+function playerIcon (show : boolean) {
+	var val : int;
+	if(show)val = 1;
+	else val = 0;
+	
+	player.GetComponent(SpriteRenderer).color.a = val;
+}
+
+// -------- Chatbox show/hide
+function enemyChatBox (show : boolean) {
+	var val : int;
+	if(show)val = 1;
+	else val = 0;
+	
+	chat_e.GetComponent(SpriteRenderer).color.a = val;
+	chat_e.GetComponentInChildren(GUIText).color.a = val;
+}
+
+function playerChatBox (show : boolean) {
+	var val : int;
+	if(show)val = 1;
+	else val = 0;
+	
+	chat_p.GetComponent(SpriteRenderer).color.a = val;
+	chat_p.GetComponentInChildren(GUIText).color.a = val;
+}
+
+// ----------- Options
+
+function setOptions (arr : Array) {
+	options.GetComponentsInChildren(GUIText)[0].GetComponent.<GUIText>().text = arr[0];
+	options.GetComponentsInChildren(GUIText)[1].GetComponent.<GUIText>().text = arr[1];
+	options.GetComponentsInChildren(GUIText)[2].GetComponent.<GUIText>().text = arr[2];
+	options.GetComponentsInChildren(GUIText)[3].GetComponent.<GUIText>().text = arr[3];
+}
+
+function showOptions (show : boolean) {
+	var val : int;
+	if(show)val = 1;
+	else val = 0;
+	options.GetComponent(SpriteRenderer).color.a = val;
+	options.GetComponentsInChildren(GUIText)[0].GetComponent.<GUIText>().color.a = val;
+	options.GetComponentsInChildren(GUIText)[1].GetComponent.<GUIText>().color.a = val;
+	options.GetComponentsInChildren(GUIText)[2].GetComponent.<GUIText>().color.a = val;
+	options.GetComponentsInChildren(GUIText)[3].GetComponent.<GUIText>().color.a = val;
+	selectOption(0);
+}
+
+function selectOption (index : int) {
+	var anim : Animator = options.GetComponent(Animator);
+	anim.SetInteger("NowOption", index);
+}
+
+function chooseOption (options : Array) {
+	if(options[index_o] == answer[index_a]) {
+		index_o = 0;
+		index_a ++;
+		// progress ++;
+		showOptions (false);
+		showEnemyStf (true);
+		enemySpeak (regular_speech_e[index_e++]);
+	}
+	else {
+		progress --;
+		showEnemyStf (true);
+		enemySpeak (wrong_speech_e[index_o]);
+	}
+}
+
+// -------- Dungeon Door Open
+
+function doorOpen () {
+	var anim : Animator = bg.GetComponent(Animator);
+	anim.SetBool("DoorOpen", true);
+}
+
+function walkInside () {
+	showEnemyStf(false);
+	showPlayerStf(false);
+	while(1) {
+		GameObject.Find("_MainCamera").GetComponent(Camera).orthographicSize -= .1;
+		if(GameObject.Find("_MainCamera").GetComponent(Camera).orthographicSize < 1)break;
+		yield WaitForSeconds(.01);
+	}
+	Application.LoadLevel(10);
+}

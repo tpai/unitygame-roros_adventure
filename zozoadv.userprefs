@@ -1,0 +1,25 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Stage10.js">
+    <Files>
+      <File FileName="Assets\Scripts\EndScene.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EndStory.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Stage1.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AutoType.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\BeforeAll.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Stage2.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Stage3.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Stage4.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Stage5.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Stage6.js" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Stage7.js" Line="214" Column="2" />
+      <File FileName="Assets\Scripts\Stage8.js" Line="218" Column="26" />
+      <File FileName="Assets\Scripts\Stage9.js" Line="232" Column="26" />
+      <File FileName="Assets\Scripts\Stage10.js" Line="229" Column="26" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

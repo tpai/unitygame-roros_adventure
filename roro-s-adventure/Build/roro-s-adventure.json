@@ -1,0 +1,13 @@
+{
+"companyName": "Shinshi Muteki",
+"productName": "roro's adventure",
+"dataUrl": "roro-s-adventure.data.unityweb",
+"asmCodeUrl": "roro-s-adventure.asm.code.unityweb",
+"asmMemoryUrl": "roro-s-adventure.asm.memory.unityweb",
+"asmFrameworkUrl": "roro-s-adventure.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}
